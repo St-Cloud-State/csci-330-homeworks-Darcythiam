@@ -1,0 +1,113 @@
+2.2 ((A) (B)), (A (B (C))), (((A) (B)) (C)) are Well-formed. All parentheses are balanced and nested correctly.
+2.4. the entire structure in parenthesis notation is:((BOWS ARROWS) (FLOWERS CHOCOLATES)).
+2.6. () - ((NIL))
+    (()) - NIL
+    ((())) - (NIL)
+    (() ()) - (NIL (NIL))
+    (() (())) - (NIL NIL)
+
+2.13. The list is:(((FUN) (IN THE) (SUN)))
+
+Steps to Access Each Word:
+
+To Access FUN:
+
+Step	Result
+
+start	(((FUN)) (IN THE) (SUN))
+C. .DR	((FUN))
+C. .ADR	(FUN)
+C.DADR	FUN
+
+Table for IN:
+
+Step	Result
+start	(((FUN)) (IN THE) (SUN))
+C. .ADR	(IN THE)
+C.DADR	IN
+
+Table for THE:
+
+Step	Result
+
+start	(((FUN)) (IN THE) (SUN))
+C. .ADR	(IN THE)
+C.ADADR	THE
+
+Table for SUN:
+
+Step	Result
+start	(((FUN)) (IN THE) (SUN))
+C..ADR	(SUN)
+C.DADR	SUN
+
+2.15
+Function	Result
+
+CAR	        (A B)
+CDDR	    ((E F))
+CADR	    (C D)
+CDAR	    B
+CDDAR	    A
+CDADDR	    F
+
+2.16. CAAR(FRED NIL) results in an error because CAR cannot operate on the atom FRED
+
+QUESTION 2
+
+6. Most of UNIX is written in C.
+
+7. Too many features can make the language complex, leading to Potential errors due to overlapping or redundant features.
+
+8.User-defined operator overloading can harm readability because the meaning of standard operators can be changed, making the behavior unpredictable.
+
+10. An example is arrays and pointers in C
+
+11. ALGOL 68 used orthogonality as a primary design criterion, emphasizing consistency and simplicity in language constructs.
+
+12. The goto statement is often used to build more complicated control structures in languages that lack constructs like if-else or loops.
+
+13. A program is reliable if it produces correct results consistently, Handles unexpected inputs or conditions gracefully, does not crash or behave unpredictably.
+
+14. Type checking ensures that the correct types of arguments are passed to a subprogram.Errors due to mismatched types are caught at compile-time (in statically-typed languages) rather than runtime, improving program reliability.
+
+15. Aliasing is having two or more distinct names in a program that can be used to access the same memory cell.
+
+16. Exception handling is the special processing that may be required when an exception is detected.
+
+16. Readability is critical to writability because:
+-Code that is easier to read is also easier to understand and modify.
+-Clear and concise code reduces the likelihood of errors and enhances collaboration among developers.
+
+20.  The primary programming language deficiencies that were discovered were incompleteness of type checking and inadequacy of control statements (requiring the extensive use of gotos).
+
+21. the 3 fundamental features of programming languages are Encapsulation, Inheritance, Polymorphism.
+
+22. Simula 67
+
+23. Readability versus Efficiency: Making a language more human-readable often involves adding abstraction or higher-level constructs, which may reduce runtime performance.
+
+24. Compilation: Translating the source code into machine code before execution.
+Interpretation: Executing the source code line by line at runtime.
+Hybrid Implementation: Combining compilation and interpretation, where the source code is compiled into an intermediate form and then interpreted (e.g., Java with bytecode).
+
+25. A compiler produces faster program execution because it translates the entire program into machine code before execution, eliminating the overhead of interpreting each line during runtime.
+
+29. -Simplified Debugging and Testing: Programs can be executed immediately without the need for compilation.Errors are detected at runtime, and the interpreter can point to the exact location in the code where the error occurs.
+
+-Platform Independence: Pure interpreters don't generate machine-specific code, so programs can run on any platform with the interpreter installed.
+
+-Dynamic Language Features: Pure interpreters can support highly dynamic features like runtime modifications to code or type checking, which are challenging in compiled languages.
+
+-No Compilation Step: Programs don't need to be compiled, which speeds up the development process, especially during rapid prototyping or experimentation.
+
+
+
+
+
+
+
+
+
+
+

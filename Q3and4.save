@@ -1,0 +1,12 @@
+
+;; Test constructing lists and accessing elements
+(defvar list1 (cons 'a (cons 'b (cons 'c nil))))
+(print list1) ;; Should output: (A B C)
+
+(defvar list2 (cons (cons 'a nil) (cons 'b (cons (cons 'c (cons 'd nil)) nil))))
+(print list2) ;; Should output: ((A) B (C D))
+
+(defvar list3 '(a b x d))
+(print (car (cdr (cdr list3)))) ;; Should output: X
+
+sbcl --script Q3and4.lisp
