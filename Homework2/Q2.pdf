@@ -1,0 +1,16 @@
+The two common data structures included in Plankalkül were arrays and records.
+the slowness of interpretive systems was tolerated in the 1950s because of the lack of floating-point hardware in the available computers. All floating-point operations had to be simulated in software, a very time-consuming process.
+The floating-point hardware was the major impact in the evolution of programming languages because it removed the hiding place for the cost of interpretation.
+The flow statements added to Fortran IV to get Fortran 77 were if statements and Do loop statements
+Linguists were interested by artificial intellingence due to their concern with natural language processing
+Lisp was developed in the late 1950s at the Massachusetts Institute of Technology (MIT) by John McCarthy.
+A key factor that damaged ALGOL 60's chances for widespread use was its lack of standard input/output (I/O) facilities.
+The organization most responsible for the early success and widespread use of COBOL was the United States Department of Defense.
+A nonprocedural language is a programming language in which the programmer specifies what the program should accomplish, rather than how to accomplish it. The focus is on describing the desired result or outcome, and the underlying system determines the specific steps to achieve that result.
+In Prolog, a database is primarily populated with facts and rules.
+The first application for Java was for embedded consumer electronic devices like toasters, microwave ovens, and interactive TV systems.
+JavaScript is most widely used for web development
+JavaScript and PHP are both widely used programming languages for web development
+C# improves the C switch statement by adding support for non-integral types, preventing accidental fallthrough with enforced breaks, and introducing pattern matching for complex conditions, making it more flexible, type-safe, and readable.
+An XSLT processor is a program that takes as input an XML data document and an XSLT document (which is also in the form of an XML document).
+The XSLT processor ouputs an XML data document that could be in HTML or plaintext.

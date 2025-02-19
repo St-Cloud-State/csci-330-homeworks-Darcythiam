@@ -10,7 +10,7 @@
 ;; Accessing 'x' in (a (b (x d)))
 (print "Accessing 'x' in (a (b (x d))):")
 (print (car (car (cdr (car (cdr list2))))))
-
+script Q1
 ;; Accessing 'x' in (((a (b (x) d))))
 (print "Accessing 'x' in (((a (b (x) d)))):")
 (print (car (cdr (car (cdr (car (car list3)))))))

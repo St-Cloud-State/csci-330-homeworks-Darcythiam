@@ -1,0 +1,75 @@
+Script started on 2025-02-11 05:06:00+00:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="123" LINES="33"]
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam [0;36m([1;31mmain[0;36m) [0m$ sbcl
+This is SBCL 1.4.3, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+* (NOT (EQUAL 3 (ABS -3)))
+
+NIL
+* (/ (+ 8 12) 2)
+
+10
+* (+ (* 3 3) (* 4 4))
+
+25
+* (defun miles-per-gallon (initial-odometer-reading final-odometer-reading gallons-consumed)  (if (> gallons-consumed 0)      (/ (- final-odometer-reading initial-odometer-reading) gallons-consumed)      (error "GALLONS-CONSUMED must be greater than 0")))
+
+MILES-PER-GALLON
+* (third '(the quick brown fox))
+
+BROWN
+* '(list 2 and 2 is 4)
+
+(LIST 2 AND 2 IS 4)
+* (+ 1 (length (list t t t t)))
+
+5
+* (cons 'patrick '(seymour marvin))
+
+(PATRICK SEYMOUR MARVIN)
+* (cons 'patrick (list 'seymour 'marvin))
+
+(PATRICK SEYMOUR MARVIN)
+* (defun mystery (x)
+  (list (second x) (first x)))
+
+MYSTERY
+* (mystery '(dancing bear))
+
+(BEAR DANCING)
+* (mystery '(zowie))
+
+(NIL ZOWIE)
+* (mystery (list 'first 'second))
+
+(SECOND FIRST)
+* (list 'cons t nil)
+
+(CONS T NIL)
+* (list 'cons t nil)  ; Produces: (cons t nil)
+
+(CONS T NIL)
+* (eval (list 'cons t nil))
+
+(T)
+* (apply #'cons '(t nil))
+
+(T)
+* (eval nil)
+
+NIL
+* (list 'eval nil)
+
+(EVAL NIL)
+* (eval (list 'eval nil))
+
+NIL
+* (quit)
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam [0;36m([1;31mmain[0;36m) [0m$ exit
+exit
+
+Script done on 2025-02-11 05:11:19+00:00 [COMMAND_EXIT_CODE="0"]

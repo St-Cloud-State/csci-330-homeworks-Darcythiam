@@ -1,0 +1,72 @@
+Script started on 2025-02-19 03:22:18+00:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="123" LINES="15"]
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam [0;36m([1;31mmain[0;36m) [0m$ lsexitcat scriptquicksort.txt[3@scrip[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[K./Homework3/Quicksort[C[C[1PHomework3/Quicksort[1PHomework3/QuicksortcHomework3/QuicksortaHomework3/QuicksorttHomework3/Quicksort Homework3/Quicksort[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C.cpp
+#include <iostream>
+#include <stack>
+#include <vector>
+
+using namespace std;
+
+//Partition function
+int partition(vector<int>& arr, int low, int high) {
+    int pivot = arr[high]; //Choose the last element as pivot
+    int i = low - 1;       //Pointer for the smaller element
+    for (int j = low; j < high; j++){
+        if (arr[j] < pivot){
+            i++;
+            swap(arr[i], arr[j]); //Swap elements
+        }
+    }
+    swap(arr[i + 1], arr[high]); //Place pivot in correct position
+    return i + 1;
+}
+// Iterative Quicksort function
+void quickSort(vector<int>& arr) {
+    int low = 0, high = arr.size() - 1;
+    stack<pair<int, int>> s; //Stack to store subarray bounds
+    s.push({low, high});
+    while (!s.empty()) {
+        auto [low, high] = s.top();
+        s.pop();
+        if (low < high) {
+            int pivotIndex = partition(arr, low, high);
+            // Push left subarray
+            if (pivotIndex - 1 > low)
+                s.push({low, pivotIndex - 1});
+            // Push right subarray
+            if (pivotIndex + 1 < high)
+                s.push({pivotIndex + 1, high});
+        }
+    }
+}
+// Utility function to print array
+void printArray(const vector<int>& arr) {
+    for (int num : arr)
+        cout << num << " ";
+    cout << endl;
+}
+int main() {
+    vector<int> arr = {10, 7, 8, 9, 1, 5, 3, 6};
+    
+    cout << "Original array: ";
+    printArray(arr);
+
+    quickSort(arr);
+
+    cout << "Sorted array: ";
+    printArray(arr);
+
+    return 0;
+}
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam [0;36m([1;31mmain[0;36m) [0m$ cat Homework3/Quicksort.cppls[Kexitcat scriptquicksort.txt[3@scrip[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[K./Homework3/Quicksortg++ -std=c++17 Homework3/Quicksort.cpp -o Homework3/Quicksort
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam [0;36m([1;31mmain[0;36m) [0m$ echo "Compilation finished."[1P"[C
+Compilation finished
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam [0;36m([1;31mmain[0;36m) [0m$ echo "Compilation finished"g++ -std=c++17 Homework3/Quicksort.cpp -o Homework3/Quicksort[A
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam [0;36m([1;31mmain[0;36m) [0m$ [31Pcat Homework3/Quicksort.cpp
+
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Kcat Homework3/Quicksort.cppls[Kexitcat scriptquicksort.txt[3@scrip[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[K./Homework3/Quicksort
+Original array: 10 7 8 9 1 5 3 6 
+Sorted array: 1 3 5 6 7 8 9 10 
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam [0;36m([1;31mmain[0;36m) [0m$ exit
+exit
+
+Script done on 2025-02-19 03:24:06+00:00 [COMMAND_EXIT_CODE="0"]

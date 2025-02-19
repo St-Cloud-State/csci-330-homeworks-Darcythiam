@@ -1,0 +1,37 @@
+Script started on 2025-02-19 05:10:29+00:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="123" LINES="15"]
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam [0;36m([1;31mmain[0;36m) [0m$ lssbcl --script Homework3/mergesort.lisp[10Pca[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+;; Define partition function
+(defun partition-list (lst)
+  "Splits lst into two nearly equal halves."
+  (labels ((partition-helper (lst left right toggle)
+             (cond
+               ((null lst) (values (reverse left) (reverse right)))  ; Reverse to maintain order
+               (toggle (partition-helper (cdr lst) (cons (car lst) left) right nil))
+               (t (partition-helper (cdr lst) left (cons (car lst) right) t)))))
+    (partition-helper lst nil nil t))) ; Start with alternating placement
+;; Define merge function
+(defun merge-lists (left right)
+  "Merges two sorted lists into one sorted list."
+  (cond
+    ((null left) right)   ; If left list is empty, return right
+    ((null right) left)   ; If right list is empty, return left
+    ((<= (car left) (car right)) 
+     (cons (car left) (merge-lists (cdr left) right))) ; Take from left
+    (t (cons (car right) (merge-lists left (cdr right)))))) ; Take from right
+;; Define mergesort function
+(defun mergesort (lst)
+  "Sorts lst using the mergesort algorithm."
+  (if (or (null lst) (null (cdr lst))) ; Base case: empty or one-element list
+      lst
+      (multiple-value-bind (left right) (partition-list lst)
+        (merge-lists (mergesort left) (mergesort right))))) ; Recursively sort & merge
+;; Test Mergesort
+(format t "Sorting list: (5 3 8 6 2 4 7 1)~%")
+(format t "Sorted list: ~a~%" (mergesort '(5 3 8 6 2 4 7 1)))
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam [0;36m([1;31mmain[0;36m) [0m$ cat Homework3/mergesort.lispls[Ksbcl --script Homework3/mergesort.lisp
+Sorting list: (5 3 8 6 2 4 7 1)
+Sorted list: (1 2 3 4 5 6 7 8)
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam [0;36m([1;31mmain[0;36m) [0m$ exit
+exit
+
+Script done on 2025-02-19 05:10:52+00:00 [COMMAND_EXIT_CODE="0"]
