@@ -1,0 +1,127 @@
+Script started on 2025-03-21 02:10:13+00:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="123" LINES="15"]
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam/HWork5 [0;36m([1;31mmain[0;36m) [0m$ exit[K[K[K[Kcat parser1.lisp
+;; Recursive Descent Parser for the given grammar
+;; This parser processes input strings and reports errors if invalid
+
+(defun parseG (input)
+  "Parses G → x | y | z | w"
+  (if (member (car input) '(x y z w))
+      (values (cdr input) `(G ,(car input))) ;;Return parse tree node
+      (error (format nil "Unexpected symbol at position ~A: ~A. Expected 'x', 'y', 'z', or 'w'." 
+                     (- (length input) 1) (car input)))))
+
+(defun parseEprime (input)
+  "Parses E' → oG E' | ε (optional rule)"
+  (if (equal (car input) 'o)
+      (let ((rest (cdr input)))  ;;Consume 'o'
+        (multiple-value-bind (new-rest treeG) (parseG rest)
+          (if treeG
+              (multiple-value-bind (final-rest treeEprime) (parseEprime new-rest)
+                (values final-rest `(E' o ,treeG ,treeEprime)))  ;;Return parse tree node
+              (values input nil))))
+      (values input `(E' ε))))  ;;ε-case, return parse tree node
+
+(defun parseE (input)
+  "Parses E → G E'"
+  (multiple-value-bind (new-rest treeG) (parseG input)
+    (if treeG
+        (multiple-value-bind (final-rest treeEprime) (parseEprime new-rest)
+          (values final-rest `(E ,treeG ,treeEprime)))  ;;Return parse tree node
+        (values input nil))))
+
+(defun parseX (input)
+  "Parses X → ε (optional, does nothing)"
+  (values input `(X ε)))  ;;Always returns parse tree node
+
+(defun parseLprime (input)
+  "Parses L' → sL' | ε"
+  (if (equal (car input) 's)
+      (let ((rest (cdr input)))
+        (multiple-value-bind (new-rest treeLprime) (parseLprime rest)
+          (values new-rest `(L' s ,treeLprime))))  ;;Return parse tree node
+      (values input `(L' ε))))  ;;ε-case, return parse tree node
+
+(defun parseL (input)
+  "Parses L → sL'"
+  (if (equal (car input) 's)
+      (let ((rest (cdr input)))
+        (multiple-value-bind (new-rest treeLprime) (parseLprime rest)
+          (values new-rest `(L s ,treeLprime))))  ;;Return parse tree node
+      (error (format nil "Unexpected symbol at position ~A: ~A. Expected 's'." 
+                     (- (length input) 1) (car input)))))
+
+(defun parseS (input)
+  "Parses S → sX | dLb"
+  (if (null input)
+      (error "Unexpected end of input. Expected 's' or 'd'.")
+    (if (equal (car input) 's)
+        (let ((rest (cdr input)))
+          (multiple-value-bind (new-rest treeX) (parseX rest)
+            (values new-rest `(S s ,treeX))))  ;;Return parse tree node
+
+        (if (equal (car input) 'd)
+            (let ((rest (cdr input)))
+              (multiple-value-bind (new-rest treeL) (parseL rest)
+                (if (and treeL (consp new-rest) (equal (car new-rest) 'b))
+                    (values (cdr new-rest) `(S d ,treeL b))  ;;Consume 'b'
+                    (error "Unexpected end of input. Expected 'b'."))))
+            
+            (error (format nil "Unexpected symbol: ~A. Expected 's' or 'd'." 
+                           (if (null input) "empty input" (car input))))))))
+
+
+(defun parseI (input)
+  "Parses the start symbol I → iES and ensures all input is consumed."
+  (if (equal (car input) 'i)
+      (let ((rest (cdr input)))  ;;Move to next input symbol
+        (multiple-value-bind (new-rest treeE) (parseE rest)
+          (if treeE
+              (multiple-value-bind (final-rest treeS) (parseS new-rest)
+                (if (and treeS (null final-rest))  ;;Ensure all input is consumed
+                    (values final-rest `(I i ,treeE ,treeS))  ;;Return parse tree node
+                    (error (format nil "Parsing Error: Extra characters found: ~A" final-rest))))
+              (values input nil))))
+      (error (format nil "Unexpected symbol at position 1: ~A. Expected 'i'." (car input)))))
+
+
+(defun parse (input)
+  "Main parser function that starts parsing from I and returns a parse tree."
+  (handler-case
+      (multiple-value-bind (final-rest tree) (parseI input)
+        (if (and tree (null final-rest))
+            (format t "Parse Tree: ~A~%" tree)  ;;Print parse tree
+            (format t "Parsing Error: Extra characters found: ~A~%" final-rest)))
+    (error (c) (format t "Error: ~A~%" c))))
+
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam/HWork5 [0;36m([1;31mmain[0;36m) [0m$ cat parser1.lispexit[Ksbcl
+This is SBCL 1.4.3, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+* ) (load "pat rser1.lisp: ")
+
+T
+* (parse '(i x o y o w d s s b))
+Parse Tree: (I I (E (G X) (E 'O (G Y) (E 'O (G W) (E 'Ε))))
+               (S D (L S (L 'S (L 'Ε))) B))
+NIL
+* (parse '(i x o y s))
+Parse Tree: (I I (E (G X) (E 'O (G Y) (E 'Ε))) (S S (X Ε)))
+NIL
+* (parse '(i x o w d s s b e s))
+Error: Parsing Error: Extra characters found: (E S)
+NIL
+* (parse '(i x o y z))  
+Error: Unexpected symbol: Z. Expected 's' or 'd'.
+NIL
+* (parse '(i x d s b))
+Parse Tree: (I I (E (G X) (E 'Ε)) (S D (L S (L 'Ε)) B))
+NIL
+* (exit)
+[0;32m@Darcythiam [0m➜ [1;34m/workspaces/csci-330-homeworks-Darcythiam/HWork5 [0;36m([1;31mmain[0;36m) [0m$ exit
+exit
+
+Script done on 2025-03-21 02:12:16+00:00 [COMMAND_EXIT_CODE="0"]
